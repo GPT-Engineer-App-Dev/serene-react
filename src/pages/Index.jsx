@@ -1,6 +1,7 @@
 import { Box, Container, Flex, Text, VStack, Link, Spacer, Button, List, ListItem } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
+import { useSupabaseAuth } from "../integrations/supabase/auth.jsx";
 import { useEvents } from "../integrations/supabase/index.js";
 
 const Index = () => {
