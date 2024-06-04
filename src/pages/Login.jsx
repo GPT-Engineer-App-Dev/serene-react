@@ -1,9 +1,14 @@
 import { Box, Container, Flex, Text, VStack, Link, Spacer, Button } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
-import { useSupabaseAuth } from "../integrations/supabase/auth.jsx";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { SupabaseAuthUI, useSupabaseAuth } from "../integrations/supabase/auth.jsx";
 
-const Index = () => {
+const Login = () => {
   const { session, logout } = useSupabaseAuth();
+  const navigate = useNavigate();
+
+  if (session) {
+    navigate("/");
+  }
 
   return (
     <Box>
@@ -19,26 +24,21 @@ const Index = () => {
           <Link as={RouterLink} to="/about" margin="0 1rem" color="white">
             About
           </Link>
-          {!session && (
-            <Link as={RouterLink} to="/login" margin="0 1rem" color="white">
-              Login
-            </Link>
-          )}
-          {session && (
-            <Button onClick={logout} colorScheme="red" margin="0 1rem">
-              Logout
-            </Button>
-          )}
         </Box>
       </Flex>
       <Container centerContent maxW="container.md" height="80vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <VStack spacing={4}>
-          <Text fontSize="2xl">Your Blank Canvas</Text>
-          <Text>Chat with the agent to start making edits.</Text>
+          <Text fontSize="2xl">Login</Text>
+          <SupabaseAuthUI />
+          {session && (
+            <Button onClick={logout} colorScheme="red">
+              Logout
+            </Button>
+          )}
         </VStack>
       </Container>
     </Box>
   );
 };
 
-export default Index;
+export default Login;
